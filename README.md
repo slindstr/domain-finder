@@ -8,7 +8,7 @@ This is a super simple way to check for domain name availablility. Here's how it
      - Enter the filename containing domain names to check (one per line)
      - Enter the path to save results
 
- The script will use whois and grep for the string "No match for" and output the data as a tab
+ The script will use whois and grep for the string "No match for" and output the data as a pipe
  delimited file thet displays domain name, availability, and the name of the person that came up
  with the domain name.
 

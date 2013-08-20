@@ -8,7 +8,7 @@
 #     - Enter the filename containing domain names to check (one per line)
 #     - Enter the path to save results
 #
-# The script will use whois and grep for the string "No match for" and output the data as a tab
+# The script will use whois and grep for the string "No match for" and output the data as a pipe
 # delimited file thet displays domain name, availability, and the name of the person that came up
 # with the domain name.
 #
@@ -43,7 +43,7 @@ eval FILENAME=$FILENAME
 eval SAVE_FILE=$SAVE_FILE
 
 # create the column headers...
-echo "Domain Name\tIs Available?\tAuthor" >> $SAVE_FILE
+echo "Domain Name|Is Available?|Author" >> $SAVE_FILE
 
 # Check to see what's available and what's not...
 cat $FILENAME | while read DOMAIN
@@ -51,10 +51,10 @@ do
   if whois $DOMAIN | grep -q "No match for";
   then
     echo "Processing $DOMAIN...done!"
-    echo "$DOMAIN\tyes\t$NAME" >> $SAVE_FILE
+    echo "$DOMAIN|yes|$NAME" >> $SAVE_FILE
   else
     echo "Processing $DOMAIN...done!"
-    echo "$DOMAIN\tno\t$NAME" >> $SAVE_FILE
+    echo "$DOMAIN|no|$NAME" >> $SAVE_FILE
   fi
 done
 
