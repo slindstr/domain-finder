@@ -1,4 +1,4 @@
-#!/usr/bin/bin bash
+#!/usr/bin/env bash
 
 #
 # This is a super simple way to check for domain name availablility. Here's how it works:
@@ -34,8 +34,8 @@
 
 # grab the user input...
 read -p "Enter your name: " NAME
-read -e -p "Filename: " FILENAME
-read -e -p "Path to save results: " SAVE_FILE
+read -e -p "Domain list path: " FILENAME
+read -e -p "Results path: " SAVE_FILE
 
 # make sure the paths get expanded...
 eval NAME=$NAME
@@ -46,16 +46,16 @@ eval SAVE_FILE=$SAVE_FILE
 echo "Domain Name|Is Available?|Author" >> $SAVE_FILE
 
 # Check to see what's available and what's not...
-cat $FILENAME | while read DOMAIN
+while read DOMAIN || [[ -n "$DOMAIN" ]]
 do
   if whois $DOMAIN | grep -q "No match for";
   then
-    echo "Processing $DOMAIN...done!"
+    echo "Processing $DOMAIN..."
     echo "$DOMAIN|yes|$NAME" >> $SAVE_FILE
   else
-    echo "Processing $DOMAIN...done!"
+    echo "Processing $DOMAIN..."
     echo "$DOMAIN|no|$NAME" >> $SAVE_FILE
   fi
-done
+done <$FILENAME
 
 echo "done!"
